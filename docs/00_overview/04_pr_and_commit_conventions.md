@@ -77,13 +77,37 @@ Use the same type prefixes as pull requests.
 
 ---
 
-### Examples of Good Commit Messages
+### Examples of Good Commit Messages (One Line)
 
-- data: validate required fields in raw transaction data
-- model: add retry-aware features to classifier
-- docs: clarify PR workflow and branch rules
-- fix: handle missing timestamps during ingestion
-- refactor: extract prioritization logic into service layer
+>- data: validate required fields in raw transaction data
+>- model: add retry-aware features to classifier
+>- docs: clarify PR workflow and branch rules
+>- fix: handle missing timestamps during ingestion
+>- refactor: extract prioritization logic into service layer
+
+---
+
+### Example of a Good Commit Message (With Details)
+
+When a change benefits from additional context, use a commit body.
+
+**Commit message:**
+
+>data: validate required fields in raw transaction data
+
+**Commit body:**
+
+>- Added checks for missing and null values in required columns
+>- Enforced basic type validation for identifiers and timestamps
+>- Logged validation failures to support downstream debugging
+
+Use a detailed commit body when:
+
+- assumptions are introduced,
+- behavior changes in non-obvious ways,
+- or the reasoning behind the change matters later.
+
+The first line should always stand on its own as a clear summary.
 
 ---
 
@@ -118,6 +142,66 @@ If you cannot explain the commit in one sentence, split it.
 - Focus on clarity during development; cleanliness happens at integration
 
 ---
+
+## End-to-End Example
+
+Below is a complete example showing how a pull request and its commits should look together.
+
+### Example: One-Sentence Summary (PR Title)
+
+>`data: add initial ingestion pipeline for Zenodo dataset`
+
+From the title alone, a reviewer should understand:
+
+- the type of work (`data`)
+- the scope (ingestion pipeline)
+- the subject (Zenodo dataset)
+
+---
+
+### Example: Pull Request Description (With Detail)
+
+**What changed**  
+Added an initial data ingestion pipeline to load the raw Zenodo dataset into the project’s standardized format.
+
+**Why it changed**  
+The modeling and EDA notebooks require a consistent, validated input dataset. This pipeline establishes a repeatable starting point for downstream analysis.
+
+**Assumptions / Open Questions**  
+
+- Assumes the current Zenodo schema is stable  
+- Additional validation rules may be needed once edge cases are identified during EDA
+
+Related notebook owners should review for alignment with their planned work.
+
+---
+
+### Example: Commit History Within the PR
+
+>`data: add raw data loader for Zenodo files`
+>`data: validate required columns and types`
+>`data: normalize timestamps and identifiers`
+>`docs: document ingestion assumptions and limitations`
+
+Each commit:
+
+- does one logical thing,
+- uses a clear prefix,
+- can be understood without opening the diff.
+
+This makes review faster and history more useful.
+
+---
+
+### Anti-Example (What Not to Do)
+
+**PR title:**  
+`Updates`
+
+**Commits:**  
+`fix`
+`more fixes`
+`final version`
 
 ## Summary
 

@@ -20,7 +20,8 @@ This is a team project, but integration is centralized.
 - `main` is the integration and release branch
 - It should always remain in a clean, working state
 - No one merges directly into `main`
-- **Only the Project Manager (PM) merges pull requests into `main`**
+
+>- **Only the Project Manager (PM) merges pull requests into `main`**
 
 ---
 
@@ -43,6 +44,8 @@ Examples:
 - `feature/model-baseline`
 - `feature/dashboard-prototype`
 - `docs/data-sources-update`
+
+>**Note:** These are just examples, see `docs/00_overview/02_collaborator_responsibilities.md` for the full list of branches and responsibilities.
 
 Rules:
 
@@ -77,23 +80,24 @@ Project rules:
 
 From `develop`:
 
-git checkout develop  
+git switch develop  
 git pull origin develop  
-git checkout -b feature/your-branch-name  
+git switch -c feature/your-branch-name  
 
 ---
 
 ### 2. Do Your Work
 
 - Make small, logical commits
-- Write clear commit messages
-- Do not mix unrelated changes in one branch
+- Write clear, descriptive commit messages
+- Commit regularly. Do not bundle all work for a day into a single commit.
+- Do not mix unrelated changes within the same branch.
 
 ---
 
 ### 3. Push Your Branch
 
-git push origin feature/your-branch-name  
+`git push origin feature/your-branch-name`  
 
 ---
 
@@ -103,23 +107,29 @@ On GitHub:
 
 - Base branch: `develop`
 - Compare branch: your feature branch
+- Ensure the arrow points **into** `develop`
 
-Include in the PR description:
+Include the following in the PR description:
 
 - What changed
 - Why it changed
 - Any assumptions or open questions
 
-Do not open PRs directly to `main`.
+Maintaining a project diary is strongly encouraged to document decisions and progress.
+
+- Keep your project diary under  
+  `docs/11_project_diary/<your-branch-name>/<YYYYMMDD>_daily-diary.md`
+
+Do **not** open pull requests directly to `main`.
 
 ---
 
 ### 5. Review & Merge
 
-- The PM reviews the PR
-- Changes may be requested
-- Once approved, the PR is merged into `develop`
-- Promotion to `main` happens separately
+- The PM reviews the pull request.
+- Changes may be requested via comments in the PR. Check the status of your PR regularly and address feedback until it is approved.
+- Once approved, the PR is merged into `develop`.
+- Promotion to `main` happens separately and is handled by the PM.
 
 ---
 
@@ -199,7 +209,11 @@ You should receive a success message.
 
 ### 7. Use SSH URLs
 
+Use the SSH URL when cloning repositories:
+
 `git clone git@github.com:ORG_NAME/REPO_NAME.git`
+
+When copying the repository URL from GitHub, select the **SSH** option in the web interface.
 
 ---
 

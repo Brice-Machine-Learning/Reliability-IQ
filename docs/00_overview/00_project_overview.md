@@ -2,11 +2,11 @@
 
 ## Purpose
 
-Reliability IQ is a collaborative applied machine learning project focused on **operational reliability in transaction-based systems**.
+Reliability IQ is a team project focused on analyzing how real transaction systems fail and how those failures are handled in practice.
 
-The project is not concerned with predicting financial outcomes or user behavior. Instead, it focuses on understanding how transactions behave when systems degrade, fail, retry, or require manual intervention, and on supporting operational teams who must respond to those situations under time and resource constraints.
+The project is not about predicting revenue, customer behavior, or business outcomes. It focuses on transaction-level events that fail, retry, stall, or require manual follow-up, and on the operational decisions that follow when those issues accumulate.
 
-The goal is to build a system that reflects how reliability and operations teams actually work, rather than an isolated modeling exercise.
+The intent is to model and surface information that operations and engineering teams would realistically use to decide what needs attention, what can wait, and what is likely to resolve on its own.
 
 ---
 
@@ -26,50 +26,60 @@ These decisions are often made using incomplete information, delayed signals, an
 
 ## Project Scope
 
-The project focuses on:
+This project works with transaction-level events and looks at what happens when those transactions do not complete cleanly.
 
-- Transaction-level event data
-- Outcome and failure behavior classification
-- Prioritization of unresolved or degraded transactions
-- Aggregation of reliability signals across time, channels, and entities
+The focus is on:
 
-The system is intentionally scoped to **decision support**, not automation. Outputs are designed to inform human operators, not replace them.
+- identifying different failure outcomes,
+- understanding which issues remain unresolved,
+- and helping prioritize what should be looked at first when multiple problems occur at the same time.
 
-Out of scope:
+Results are meant to support operational decision-making. The system does not take actions on its own and does not attempt to automate responses. It surfaces information so people can decide what to do next.
 
-- Fraud detection
-- Credit risk modeling
-- Price or revenue forecasting
-- Real-time production deployment
+### Out of Scope
+
+This project does **not** attempt to:
+
+- detect fraud,
+- assess credit or financial risk,
+- forecast revenue or business performance,
+- or operate as a real-time production system.
+
+Those problems are intentionally excluded to keep the scope focused and reviewable.
 
 ---
 
 ## System Perspective
 
-Reliability IQ is treated as a system, not a single model.
+Reliability IQ is built as a small system with clear boundaries, not as a single model trained in isolation.
 
-Key design principles include:
+Data preparation, modeling, and prioritization are treated as separate steps on purpose. This makes it easier to understand where results come from, change one part without breaking the rest, and review decisions after the fact.
 
-- Clear separation between data ingestion, modeling, and decision logic
-- Explicit handling of ambiguity and incomplete observability
-- Reproducible and reviewable pipelines
-- Interfaces that support both engineering workflows and operational review
+The project assumes the data is incomplete and sometimes inconsistent. That uncertainty is handled explicitly rather than ignored or smoothed over.
 
-Model performance is considered alongside interpretability, stability, and operational usefulness.
+Pipelines are designed to be repeatable and inspectable. Someone else should be able to run the same steps and understand what happened without guessing.
+
+Model quality is not judged on accuracy alone. Interpretability, stability over time, and whether the output is actually useful to someone reviewing issues all matter.
 
 ---
 
 ## Collaboration Model
 
-This project is developed as a team collaboration with clearly separable areas of responsibility, including:
+This project is structured as a coordinated team effort with clearly defined ownership areas.
 
-- Data ingestion and validation
-- Feature engineering
-- Modeling and evaluation
-- Prioritization logic
-- Application and API interfaces
-- Dashboarding and reporting
-- Documentation and assumptions
+Each major notebook and system component has a single primary owner responsible for its development and documentation. Work is intentionally divided to allow parallel progress while minimizing overlap and merge conflicts.
+
+Notebook-focused contributors are responsible for:
+
+- baseline analysis and problem framing,
+- exploratory data analysis,
+- feature engineering,
+- modeling and evaluation,
+- and synthesizing results into a final narrative.
+
+Backend and integration work is owned centrally to ensure consistency across the system. This includes data contracts, application logic, and final integration of analytical outputs.
+
+All contributions are made through feature branches and reviewed via pull requests. Integration into the main branch is handled by the project manager to maintain a stable and coherent codebase.
 
 Architectural decisions, constraints, and tradeoffs are documented explicitly to ensure consistency across contributors and to support maintainability as the project evolves.
 
