@@ -17,6 +17,7 @@ Responsibilities:
 - Overall project coordination and integration
 - Backend architecture and API design
 - Data contracts between notebooks and backend
+- Data contracts define the expected schema, column meanings, units, and acceptable missing-value behavior between notebooks and backend components
 - Final review and promotion of changes to main
 
 Branches:
@@ -30,11 +31,31 @@ Only the PM merges pull requests into main.
 
 ---
 
-## Baseline & Problem Framing
+## Data Ingestion & Cleaning
 
 Notebook:
 
-- 00_baseline.ipynb
+- 00_data_ingestion.ipynb
+
+Responsibilities:
+
+- Load raw source files
+- Perform minimal, reversible cleaning
+- Standardize schemas and data types
+- Persist cleaned artifacts for downstream use
+- Document all destructive operations
+
+Branch:
+
+>- feature/data-ingestion
+
+---
+
+## Problem Definition & Labeling
+
+Notebook:
+
+- 01_baseline_analysis.ipynb
 
 Responsibilities:
 
@@ -53,7 +74,7 @@ Branch:
 
 Notebook:
 
-- 01_eda.ipynb
+- 02_eda.ipynb
 
 Responsibilities:
 
@@ -72,7 +93,7 @@ Branch:
 
 Notebook:
 
-- 02_feature_engineering.ipynb
+- 03_feature_engineering.ipynb
 
 Responsibilities:
 
@@ -90,7 +111,7 @@ Branch:
 
 Notebook:
 
-- 03_modeling.ipynb
+- 04_modeling.ipynb
 
 Responsibilities:
 
@@ -109,7 +130,7 @@ Branch:
 
 Notebook:
 
-- 04_evaluation.ipynb
+- 05_evaluation.ipynb
 
 Responsibilities:
 
@@ -128,7 +149,7 @@ Branch:
 
 Notebook:
 
-- 05_conclusion.ipynb
+- 06_conclusion.ipynb
 
 Responsibilities:
 

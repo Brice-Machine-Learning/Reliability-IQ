@@ -2,99 +2,150 @@
 
 ## Purpose
 
-Reliability IQ is a team project focused on analyzing how real transaction systems fail and how those failures are handled in practice.
+Reliability IQ is a collaborative applied machine learning project focused on **operational failure analysis in transaction-based systems**.
 
-The project is not about predicting revenue, customer behavior, or business outcomes. It focuses on transaction-level events that fail, retry, stall, or require manual follow-up, and on the operational decisions that follow when those issues accumulate.
+In this project, a *transaction* refers to a **system-level operation**, not a customer decision. The project is concerned with what happens when expected system workflows fail to complete cleanly due to technical, infrastructural, or dependency-related issues.
 
-The intent is to model and surface information that operations and engineering teams would realistically use to decide what needs attention, what can wait, and what is likely to resolve on its own.
+The goal is to analyze how these failures behave over time and to support the operational decisions that follow when failures accumulate, persist, or become ambiguous.
+
+This is not a business forecasting project. It does not model customer behavior, creditworthiness, or financial outcomes. It focuses on **system behavior under failure conditions** and the operational workload that results.
+
+---
+
+## What “Failed Transaction” Means in This Project
+
+A failed transaction, as used in Reliability IQ, is any system-level transaction event that does not complete its expected lifecycle.
+
+Examples include:
+
+- requests that time out or are dropped,
+- retries that continue without resolution,
+- downstream acknowledgements that never arrive,
+- events that remain in an incomplete or unknown state,
+- workflows that stall partway through execution due to upstream or downstream dependencies.
+
+These failures are not necessarily catastrophic or user-visible in isolation. Many resolve on their own. Others persist and quietly accumulate operational overhead.
+
+The project models **failure handling**, not customer intent.
 
 ---
 
 ## Problem Context
 
-Transaction systems fail in a variety of ways. Some failures resolve automatically through retries or downstream recovery. Others persist and create customer impact, operational workload, or escalation events.
+In real transaction platforms, failures are common and uneven.
 
-Operational teams are typically left answering questions such as:
+Some failures:
 
-- Which failures are likely to resolve without intervention?
-- Which failures are unlikely to recover on their own?
-- When multiple issues occur at the same time, what should be addressed first?
+- retry and succeed automatically,
+- resolve once dependent systems recover,
+- or disappear without human intervention.
 
-These decisions are often made using incomplete information, delayed signals, and competing priorities. Reliability IQ is designed to support these decisions using transaction-level data and explicit prioritization logic.
+Others:
+
+- remain unresolved,
+- generate repeated retries,
+- require manual investigation,
+- or escalate into operational incidents.
+
+Operations and engineering teams are left answering questions such as:
+
+- Which failures are likely to resolve on their own?
+- Which failures are unlikely to recover without intervention?
+- When many issues occur at the same time, what should be investigated first?
+
+These decisions are typically made with incomplete information, delayed signals, and limited time.
+
+Reliability IQ is designed to support these decisions using historical transaction-level data and explicit prioritization logic.
 
 ---
 
-## Project Scope
+## Project Scope (What This Project Does)
 
-This project works with transaction-level events and looks at what happens when those transactions do not complete cleanly.
+Reliability IQ works with **historical transaction event data** and focuses on transactions that do not complete cleanly.
 
-The focus is on:
+Specifically, the project aims to:
 
-- identifying different failure outcomes,
-- understanding which issues remain unresolved,
-- and helping prioritize what should be looked at first when multiple problems occur at the same time.
+- classify transaction outcomes based on observed behavior,
+- identify which failures remain unresolved over time,
+- surface patterns across systems, time windows, or dependencies,
+- and produce ranked views that help prioritize investigation and follow-up.
 
-Results are meant to support operational decision-making. The system does not take actions on its own and does not attempt to automate responses. It surfaces information so people can decide what to do next.
+The system produces **decision-support outputs**.
 
-### Out of Scope
+It does not take automated action, trigger retries, or resolve issues. Its purpose is to surface information in a way that supports human judgment.
 
-This project does **not** attempt to:
+---
 
-- detect fraud,
-- assess credit or financial risk,
-- forecast revenue or business performance,
-- or operate as a real-time production system.
+## Explicitly Out of Scope
 
-Those problems are intentionally excluded to keep the scope focused and reviewable.
+To keep the project focused and reviewable, the following are intentionally excluded:
+
+- Fraud detection
+- Credit or financial risk modeling
+- Revenue or business forecasting
+- Customer behavior analysis
+- Real-time or production deployment
+
+These are valid problem domains, but they are **not part of this project**.
 
 ---
 
 ## System Perspective
 
-Reliability IQ is built as a small system with clear boundaries, not as a single model trained in isolation.
+Reliability IQ is built as a small, inspectable system rather than a single model trained in isolation.
 
-Data preparation, modeling, and prioritization are treated as separate steps on purpose. This makes it easier to understand where results come from, change one part without breaking the rest, and review decisions after the fact.
+Key characteristics include:
 
-The project assumes the data is incomplete and sometimes inconsistent. That uncertainty is handled explicitly rather than ignored or smoothed over.
+- clear separation between data ingestion, modeling, and prioritization,
+- explicit handling of incomplete or inconsistent data,
+- repeatable and reviewable pipelines,
+- outputs designed to be interpreted by operational reviewers.
 
-Pipelines are designed to be repeatable and inspectable. Someone else should be able to run the same steps and understand what happened without guessing.
+Model quality is evaluated not only on predictive performance, but also on:
 
-Model quality is not judged on accuracy alone. Interpretability, stability over time, and whether the output is actually useful to someone reviewing issues all matter.
+- interpretability,
+- stability across time,
+- and usefulness in an operational context.
 
 ---
 
 ## Collaboration Model
 
-This project is structured as a coordinated team effort with clearly defined ownership areas.
+This project is developed as a coordinated team effort with clearly defined ownership.
 
-Each major notebook and system component has a single primary owner responsible for its development and documentation. Work is intentionally divided to allow parallel progress while minimizing overlap and merge conflicts.
+Each major notebook or system component has a single primary owner responsible for:
 
-Notebook-focused contributors are responsible for:
+- implementation,
+- documentation,
+- and stated assumptions.
+
+Notebook-focused contributors handle analytical work, including:
 
 - baseline analysis and problem framing,
 - exploratory data analysis,
 - feature engineering,
 - modeling and evaluation,
-- and synthesizing results into a final narrative.
+- and synthesis of results into a final narrative.
 
-Backend and integration work is owned centrally to ensure consistency across the system. This includes data contracts, application logic, and final integration of analytical outputs.
+Backend and integration work is owned centrally to ensure consistency across data contracts, application logic, and final outputs.
 
-All contributions are made through feature branches and reviewed via pull requests. Integration into the main branch is handled by the project manager to maintain a stable and coherent codebase.
+All contributions are made through feature branches and reviewed via pull requests. Integration into the main branch is handled by the project manager to maintain stability and coherence.
 
-Architectural decisions, constraints, and tradeoffs are documented explicitly to ensure consistency across contributors and to support maintainability as the project evolves.
+Architectural decisions, constraints, and tradeoffs are documented explicitly to support maintainability as the project evolves.
 
 ---
 
 ## Intended Audience
 
-Reliability IQ is intended as a portfolio project demonstrating:
+Reliability IQ is a portfolio project intended for:
 
-- Applied machine learning in operational contexts
-- Systems thinking beyond model training
-- Collaboration and architectural discipline
-- Practical tradeoffs under realistic constraints
+- engineers,
+- data scientists,
+- and technical reviewers
 
-It is written for engineers, data scientists, and technical reviewers familiar with production systems and operational analytics.
+who are familiar with production systems, distributed workflows, and operational analytics.
+
+The project emphasizes **systems thinking, collaboration, and realistic tradeoffs**, not algorithmic novelty.
 
 ---
 
@@ -102,10 +153,10 @@ It is written for engineers, data scientists, and technical reviewers familiar w
 
 The project is under active development.
 
-Current work focuses on:
+Current focus areas include:
 
-- Defining system boundaries and architecture
-- Establishing data sources and ingestion patterns
-- Aligning on classification and prioritization objectives
+- defining system boundaries and terminology,
+- validating data sources and ingestion patterns,
+- aligning on failure classification and prioritization objectives.
 
-Implementation details will be added incrementally as the system matures.
+Implementation details will be added incrementally as these foundations are finalized.
